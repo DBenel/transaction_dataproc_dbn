@@ -1,0 +1,110 @@
+[
+  {
+    "description": "user id",
+    "mode": "NULLABLE",
+    "name": "user_id",
+    "type": "STRING"
+  },
+  {
+    "description": "transaction id",
+    "mode": "NULLABLE",
+    "name": "transaction_id",
+    "type": "STRING"
+  },
+  {
+    "description": "user country id",
+    "mode": "NULLABLE",
+    "name": "country_id",
+    "type": "STRING"
+  },
+  {
+    "description": "account id",
+    "mode": "NULLABLE",
+    "name": "account_id",
+    "type": "STRING"
+  },
+  {
+    "description": "date id",
+    "mode": "NULLABLE",
+    "name": "date_id",
+    "type": "DATE"
+  },
+  {
+    "description": "user name",
+    "mode": "NULLABLE",
+    "name": "user_name",
+    "type": "STRING"
+  },
+  {
+    "description": "user state type",
+    "mode": "NULLABLE",
+    "name": "user_state_type",
+    "type": "STRING"
+  },
+  {
+    "description": "card type",
+    "mode": "NULLABLE",
+    "name": "card_type",
+    "type": "STRING"
+  },
+  {
+    "description": "product description",
+    "mode": "NULLABLE",
+    "name": "product_description",
+    "type": "STRING"
+  },
+  {
+    "description": "card status id",
+    "mode": "NULLABLE",
+    "name": "product_status_id",
+    "type": "STRING"
+  },
+  {
+    "description": "transaction type",
+    "mode": "NULLABLE",
+    "name": "transaction_type",
+    "type": "STRING"
+  },
+  {
+    "description": "currency type",
+    "mode": "NULLABLE",
+    "name": "currency_type",
+    "type": "STRING"
+  },
+  {
+    "description": "rate amount",
+    "mode": "NULLABLE",
+    "name": "rate_amount",
+    "type": "FLOAT64"
+  },
+  {
+    "description": "foreign currency amount",
+    "mode": "NULLABLE",
+    "name": "foreign_currency_amount",
+    "type": "FLOAT64"
+  },
+  {
+    "description": "local currency amount",
+    "mode": "NULLABLE",
+    "name": "local_currency_amount",
+    "type": "FLOAT64"
+  },
+  {
+    "description": "month id",
+    "mode": "NULLABLE",
+    "name": "month_id",
+    "type": "STRING"
+  },
+  {
+    "description": "hour id",
+    "mode": "NULLABLE",
+    "name": "hour_id",
+    "type": "STRING"
+  },
+  {
+    "description": "transaction timestamp",
+    "mode": "NULLABLE",
+    "name": "transaction_timestamp",
+    "type": "STRING"
+  }
+]

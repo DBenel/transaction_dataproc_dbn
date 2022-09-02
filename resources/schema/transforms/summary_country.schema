@@ -1,0 +1,56 @@
+[
+  {
+    "description": "user country id",
+    "mode": "NULLABLE",
+    "name": "country_id",
+    "type": "STRING"
+  },
+  {
+    "description": "transaction type",
+    "mode": "NULLABLE",
+    "name": "transaction_type",
+    "type": "STRING"
+  },
+  {
+    "description": "currency type",
+    "mode": "NULLABLE",
+    "name": "currency_type",
+    "type": "STRING"
+  },
+  {
+    "description": "count transactions",
+    "mode": "NULLABLE",
+    "name": "count_transactions",
+    "type": "INT64"
+  },
+  {
+    "description": "foreign currency amount",
+    "mode": "NULLABLE",
+    "name": "foreign_currency_amount",
+    "type": "FLOAT64"
+  },
+  {
+    "description": "local currency amount",
+    "mode": "NULLABLE",
+    "name": "local_currency_amount",
+    "type": "FLOAT64"
+  },
+  {
+    "description": "total amount",
+    "mode": "NULLABLE",
+    "name": "total_amount",
+    "type": "FLOAT64"
+  },
+  {
+    "description": "count currency",
+    "mode": "NULLABLE",
+    "name": "count_currency",
+    "type": "INT64"
+  },
+  {
+    "description": "percentage country type",
+    "mode": "NULLABLE",
+    "name": "percentage_country_type",
+    "type": "FLOAT64"
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "description": "transaction id",
+    "mode": "NULLABLE",
+    "name": "transaction_id",
+    "type": "STRING"
+  },
+  {
+    "description": "account id",
+    "mode": "NULLABLE",
+    "name": "account_id",
+    "type": "STRING"
+  },
+  {
+    "description": "user id",
+    "mode": "NULLABLE",
+    "name": "user_id",
+    "type": "STRING"
+  },
+  {
+    "description": "date id",
+    "mode": "NULLABLE",
+    "name": "date_id",
+    "type": "DATE"
+  },
+  {
+    "description": "transaction type",
+    "mode": "NULLABLE",
+    "name": "transaction_type",
+    "type": "STRING"
+  },
+  {
+    "description": "currency type",
+    "mode": "NULLABLE",
+    "name": "currency_type",
+    "type": "STRING"
+  },
+  {
+    "description": "rate amount",
+    "mode": "NULLABLE",
+    "name": "rate_amount",
+    "type": "FLOAT64"
+  },
+  {
+    "description": "foreign currency amount",
+    "mode": "NULLABLE",
+    "name": "foreign_currency_amount",
+    "type": "FLOAT64"
+  },
+  {
+    "description": "local currency amount",
+    "mode": "NULLABLE",
+    "name": "local_currency_amount",
+    "type": "FLOAT64"
+  },
+  {
+    "description": "transaction timestamp",
+    "mode": "NULLABLE",
+    "name": "transaction_timestamp",
+    "type": "STRING"
+  }
+]

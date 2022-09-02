@@ -1,0 +1,32 @@
+[
+  {
+    "description": "bank account id",
+    "mode": "NULLABLE",
+    "name": "bank_account_id",
+    "type": "STRING"
+  },
+  {
+    "description": "user id",
+    "mode": "NULLABLE",
+    "name": "user_id",
+    "type": "STRING"
+  },
+  {
+    "description": "bank description",
+    "mode": "NULLABLE",
+    "name": "bank_description",
+    "type": "STRING"
+  },
+  {
+    "description": "bank status id",
+    "mode": "NULLABLE",
+    "name": "bank_status_id",
+    "type": "STRING"
+  },
+  {
+    "description": "bank timestamp",
+    "mode": "NULLABLE",
+    "name": "bank_timestamp",
+    "type": "STRING"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "description": "user id",
+    "mode": "NULLABLE",
+    "name": "user_id",
+    "type": "STRING"
+  },
+  {
+    "description": "user name",
+    "mode": "NULLABLE",
+    "name": "user_name",
+    "type": "STRING"
+  },
+  {
+    "description": "user country id",
+    "mode": "NULLABLE",
+    "name": "country_name",
+    "type": "STRING"
+  },
+  {
+    "description": "user state type",
+    "mode": "NULLABLE",
+    "name": "user_state_type",
+    "type": "STRING"
+  }
+]

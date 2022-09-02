@@ -1,0 +1,26 @@
+[
+  {
+    "description": "user name",
+    "mode": "NULLABLE",
+    "name": "user_name",
+    "type": "STRING"
+  },
+  {
+    "description": "total eur deposit",
+    "mode": "NULLABLE",
+    "name": "total_eur_deposit_amount",
+    "type": "FLOAT64"
+  },
+  {
+    "description": "total eur settlement",
+    "mode": "NULLABLE",
+    "name": "total_eur_settlement_amount",
+    "type": "FLOAT64"
+  },
+  {
+    "description": "total eur amount",
+    "mode": "NULLABLE",
+    "name": "total_eur_amount",
+    "type": "FLOAT64"
+  }
+]

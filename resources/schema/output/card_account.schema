@@ -1,0 +1,38 @@
+[
+  {
+    "description": "card account id",
+    "mode": "NULLABLE",
+    "name": "card_account_id",
+    "type": "STRING"
+  },
+  {
+    "description": "user id",
+    "mode": "NULLABLE",
+    "name": "user_id",
+    "type": "STRING"
+  },
+  {
+    "description": "card type",
+    "mode": "NULLABLE",
+    "name": "card_type",
+    "type": "STRING"
+  },
+  {
+    "description": "card description",
+    "mode": "NULLABLE",
+    "name": "card_description",
+    "type": "STRING"
+  },
+  {
+    "description": "card status id",
+    "mode": "NULLABLE",
+    "name": "card_status_id",
+    "type": "STRING"
+  },
+  {
+    "description": "card timestamp",
+    "mode": "NULLABLE",
+    "name": "card_timestamp",
+    "type": "STRING"
+  }
+]

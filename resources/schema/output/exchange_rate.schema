@@ -1,0 +1,20 @@
+[
+  {
+    "description": "date id",
+    "mode": "NULLABLE",
+    "name": "date_id",
+    "type": "STRING"
+  },
+  {
+    "description": "currency type",
+    "mode": "NULLABLE",
+    "name": "currency_type",
+    "type": "STRING"
+  },
+  {
+    "description": "rate amount",
+    "mode": "NULLABLE",
+    "name": "rate_amount",
+    "type": "FLOAT64"
+  }
+]

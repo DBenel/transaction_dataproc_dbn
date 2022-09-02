@@ -1,0 +1,38 @@
+[
+  {
+    "description": "transaction id",
+    "mode": "NULLABLE",
+    "name": "transaction_id",
+    "type": "STRING"
+  },
+  {
+    "description": "account id",
+    "mode": "NULLABLE",
+    "name": "account_id",
+    "type": "STRING"
+  },
+  {
+    "description": "transaction type",
+    "mode": "NULLABLE",
+    "name": "transaction_type",
+    "type": "STRING"
+  },
+  {
+    "description": "currency type",
+    "mode": "NULLABLE",
+    "name": "currency_type",
+    "type": "STRING"
+  },
+  {
+    "description": "transaction amount",
+    "mode": "NULLABLE",
+    "name": "transaction_amount",
+    "type": "FLOAT64"
+  },
+  {
+    "description": "transaction timestamp",
+    "mode": "NULLABLE",
+    "name": "transaction_timestamp",
+    "type": "STRING"
+  }
+]

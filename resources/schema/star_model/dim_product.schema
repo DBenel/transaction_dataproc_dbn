@@ -1,0 +1,26 @@
+[
+  {
+    "description": "account id of card or bank",
+    "mode": "NULLABLE",
+    "name": "account_id",
+    "type": "STRING"
+  },
+  {
+    "description": "card type",
+    "mode": "NULLABLE",
+    "name": "card_type",
+    "type": "STRING"
+  },
+  {
+    "description": "product description",
+    "mode": "NULLABLE",
+    "name": "product_description",
+    "type": "STRING"
+  },
+  {
+    "description": "product status id",
+    "mode": "NULLABLE",
+    "name": "product_status_id",
+    "type": "STRING"
+  }
+]
