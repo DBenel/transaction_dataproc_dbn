@@ -29,6 +29,7 @@ def transaction_user_agg(transaction_df):
         round(col("total_eur_deposit_amount")+col("total_eur_settlement_amount"), 2).alias("total_eur_amount")
     )
 
+
 def transaction_cp_agg(transaction_df, column_name):
     new_t_df = transaction_df\
         .filter(col("transaction_id").isNotNull())\
@@ -40,6 +41,7 @@ def transaction_cp_agg(transaction_df, column_name):
         ).orderBy(col(column_name))
 
     return new_t_df
+
 
 def transaction_country_window(transaction_df):
     window_spec_agg = Window.partitionBy(col("country_id"), col("transaction_type"))
@@ -54,7 +56,6 @@ def transaction_country_window(transaction_df):
     return transaction_w_df.select(
         *list(map(lambda c: col(c), transaction_w_df.columns)), percentage_column
     )
-
 
 
 def process_multiple_summary():
