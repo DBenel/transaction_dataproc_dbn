@@ -37,7 +37,7 @@ class DimProduct:
 
     def select_product_bank_df(self, bank_df):
         product_bank_df = bank_df.select(
-            col(self.bank["CARD_ACCOUNT_ID"]).alias(self.dim_product["ACCOUNT_ID"]),
+            col(self.bank["BANK_ACCOUNT_ID"]).alias(self.dim_product["ACCOUNT_ID"]),
             lit(None).cast("string").alias(self.dim_product["CARD_TYPE"]),
             col(self.bank["BANK_DESCRIPTION"]).alias(self.dim_product["PRODUCT_DESCRIPTION"]),
             col(self.bank["BANK_STATUS_ID"]).alias(self.dim_product["PRODUCT_STATUS_ID"])

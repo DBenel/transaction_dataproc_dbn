@@ -12,9 +12,10 @@ class FactTransaction:
     def __init__(self):
         self.common = Commons()
         self.constant = Constants()
+        self.card = Fields().CARD
+        self.bank = Fields().BANK
         self.transaction = Fields().TRANSACTION
         self.exchange_rate = Fields().EXCHANGE_RATE
-        self.dim_product = Fields().DIM_PRODUCT
         self.fact_transaction = Fields().FACT_TRANSACTION
 
     def read_txn_table_df(self, spark, project_id, data_set_master, txn_table_bq):
@@ -47,7 +48,7 @@ class FactTransaction:
         ).alias(self.fact_transaction["LOCAL_CURRENCY_AMOUNT"])
 
         date_id_column = when(col(self.exchange_rate["DATE_ID"]).isNotNull(), col(self.exchange_rate["DATE_ID"]))\
-            .otherwise(substring(col(self.transaction["transaction_timestamp"]), 0, 10))\
+            .otherwise(substring(col(self.transaction["TRANSACTION_TIMESTAMP"]), 0, 10))\
             .cast("date").alias(self.fact_transaction["DATE_ID"])
 
         new_t_df = transaction_df.select(
@@ -64,10 +65,15 @@ class FactTransaction:
 
         return new_t_df
 
-    def select_user_id(self, product_df):
-        return product_df.select(
-            col(self.dim_product["ACCOUNT_ID"]),
-            col(self.dim_product["USER_ID"]))
+    def select_user_id(self, card_df, bank_df):
+        user_id_card_df = card_df.select(
+            col(self.card["CARD_ACCOUNT_ID"]).alias(self.transaction["ACCOUNT_ID"]),
+            col(self.card["USER_ID"]))
+        user_id_bank_df = bank_df.select(
+            col(self.bank["BANK_ACCOUNT_ID"]).alias(self.transaction["ACCOUNT_ID"]),
+            col(self.bank["USER_ID"]))
+
+        return user_id_card_df.union(user_id_bank_df)
 
     def transaction_user_join(self, transaction_df, user_df):
         transaction_user_df = transaction_df.join(user_df,
@@ -86,9 +92,10 @@ def flow_process_fact_transaction():
     data_set_master = sys.argv[3]
     data_set_star = sys.argv[4]
     bucket_gcs = f"{bucket_input}_tmp"
+    card_table_bq = Constants().CARD_ACCOUNT_TABLE_BQ
+    bank_table_bq = Constants().BANK_ACCOUNT_TABLE_BQ
     transaction_table_bq = Constants().TRANSACTION_TABLE_BQ
     exchange_rate_table_bq = Constants().EXCHANGE_RATE_TABLE_BQ
-    dim_product_table_bq = Constants().DIM_PRODUCT_TABLE_BQ
     fact_transaction_table_bq = Constants().FACT_TRANSACTION_TABLE_BQ
     fact_transaction = FactTransaction()
 
@@ -100,9 +107,10 @@ def flow_process_fact_transaction():
 
     exchange_rate_df = fact_transaction.read_txn_table_df(spark, project_id, data_set_master, exchange_rate_table_bq)
 
-    dim_product_df = fact_transaction.read_txn_table_df(spark, project_id, data_set_star, dim_product_table_bq)
+    card_df = fact_transaction.read_txn_table_df(spark, project_id, data_set_master, card_table_bq)
+    bank_df = fact_transaction.read_txn_table_df(spark, project_id, data_set_master, bank_table_bq)
 
-    user_id_df = fact_transaction.select_user_id(dim_product_df)
+    user_id_df = fact_transaction.select_user_id(card_df, bank_df)
 
     fact_txn_output_df = transaction_df\
         .transform(lambda df:  fact_transaction.transaction_rate_join(df, exchange_rate_df))\

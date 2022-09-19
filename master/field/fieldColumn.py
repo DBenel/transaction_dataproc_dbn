@@ -12,7 +12,7 @@ class Fields:
 
     USER_STATE = {
         "USER_STATE_ID": "user_state_id",
-        "USER_STATE": "user_state"
+        "USER_STATE_TYPE": "user_state_type"
     }
 
     BANK = {
@@ -69,9 +69,9 @@ class Fields:
         "USER_NAME": "user_name",
         "COUNTRY_NAME": "country_name",
         "USER_STATE_TYPE": "user_state_type",
-        "card_type": "card_type",
-        "product_description": "product_description",
-        "product_status_id": "product_status_id",
+        "CARD_TYPE": "card_type",
+        "PRODUCT_DESCRIPTION": "product_description",
+        "PRODUCT_STATUS_ID": "product_status_id",
         "TRANSACTION_TYPE": "transaction_type",
         "CURRENCY_TYPE": "currency_type",
         "RATE_AMOUNT": "rate_amount",

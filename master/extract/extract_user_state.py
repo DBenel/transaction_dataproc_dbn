@@ -18,7 +18,7 @@ class ExtractUserState:
         user_state_df = input_user_state_df \
             .select(
                 col("USER_STATE_ID").alias(self.user_state["USER_STATE_ID"]),
-                col("USER_STATE").alias(self.user_state["USER_STATE"])
+                col("USER_STATE").alias(self.user_state["USER_STATE_TYPE"])
             )
         return user_state_df
 

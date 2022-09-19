@@ -1,8 +1,8 @@
 [
   {
-    "description": "user country id",
+    "description": "user country name",
     "mode": "NULLABLE",
-    "name": "country_id",
+    "name": "country_name",
     "type": "STRING"
   },
   {
