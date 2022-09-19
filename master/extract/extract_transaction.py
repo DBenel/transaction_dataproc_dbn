@@ -16,6 +16,7 @@ class ExtractTransaction:
     def read_transaction_df(self, spark, bucket_input, transaction_file_csv):
         input_transaction_df = self.common.read_raw_csv_cs(spark, bucket_input, transaction_file_csv)
         transaction_df = input_transaction_df \
+            .filter(col("transaction_id").isNotNull())\
             .select(
                 col("transaction_id").alias(self.transaction["TRANSACTION_ID"]),
                 col("ACCOUNT_ID").alias(self.transaction["ACCOUNT_ID"]),
@@ -23,7 +24,8 @@ class ExtractTransaction:
                 col("CURRENCY").alias(self.transaction["CURRENCY_TYPE"]),
                 col("AMOUNT").alias(self.transaction["TRANSACTION_AMOUNT"]),
                 from_unixtime(col("CREATION_TIMESTAMP")).alias(self.transaction["TRANSACTION_TIMESTAMP"])
-            ).transform(lambda df: self.common.multiple_cast_columns(df, [self.transaction["TRANSACTION_AMOUNT"]], "double"))
+            )\
+            .transform(lambda df: self.common.multiple_cast_columns(df, [self.transaction["TRANSACTION_AMOUNT"]], "double"))
         return transaction_df
 
     def write_transaction_bq_df(self, transaction_output_df, project_id, data_set_master, transaction_table_bq):

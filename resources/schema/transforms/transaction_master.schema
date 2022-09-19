@@ -12,12 +12,6 @@
     "type": "STRING"
   },
   {
-    "description": "user country id",
-    "mode": "NULLABLE",
-    "name": "country_id",
-    "type": "STRING"
-  },
-  {
     "description": "account id",
     "mode": "NULLABLE",
     "name": "account_id",
@@ -33,6 +27,12 @@
     "description": "user name",
     "mode": "NULLABLE",
     "name": "user_name",
+    "type": "STRING"
+  },
+  {
+    "description": "user country name",
+    "mode": "NULLABLE",
+    "name": "country_name",
     "type": "STRING"
   },
   {

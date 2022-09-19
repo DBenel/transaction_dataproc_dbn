@@ -56,7 +56,7 @@ class MultipleSummary:
 
 
     def transaction_country_window(self, transaction_df):
-        window_spec_agg = Window.partitionBy(col("country_id"), col("transaction_type"))
+        window_spec_agg = Window.partitionBy(col("country_name"), col("transaction_type"))
         sum_amount_column = sum(col("local_currency_amount")).over(window_spec_agg).alias("total_amount")
         count_currency_column = count(col("transaction_type")).over(window_spec_agg).cast("int").alias("count_currency")
         percentage_column = round((col("local_currency_amount")/col("total_amount"))*lit(100), 2) \
@@ -91,7 +91,7 @@ def flow_process_multiple_summary():
         .transform(lambda df:  multi_summary.transaction_user_agg(df))
     
     transaction_country_agg_df = transaction_master_df \
-        .transform(lambda df:  multi_summary.transaction_cp_agg(df, "country_id")) \
+        .transform(lambda df:  multi_summary.transaction_cp_agg(df, "country_name")) \
         .transform(lambda df:  multi_summary.transaction_country_window(df))
     
     transaction_product_agg_df = transaction_master_df \

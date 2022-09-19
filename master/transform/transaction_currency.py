@@ -60,7 +60,7 @@ class TransactionCurrency:
             col(self.txn_xr["TRANSACTION_TYPE"]),
             col(self.txn_xr["CURRENCY_TYPE"]),
             col(self.txn_xr["RATE_AMOUNT"]),
-            col(self.transaction["transaction_amount"]).alias(self.txn_xr["FOREIGN_CURRENCY_AMOUNT"]),
+            col(self.transaction["TRANSACTION_AMOUNT"]).alias(self.txn_xr["FOREIGN_CURRENCY_AMOUNT"]),
             local_currency_amount_column,
             date_id_column,
             month_id_column,

@@ -44,7 +44,7 @@ class TransactionMaster:
         new_df = user_df.join(product_df, user_df.user_id == product_df.user_id, "left") \
             .drop(product_df.user_id)
         return new_df.select(
-            list(map(lambda c: self.match_status_column(c), new_df.columns))
+            *list(map(lambda c: self.match_status_column(c), new_df.columns))
         )
 
     def user_card_transaction(self, user_card_df,transaction_df):
@@ -118,7 +118,7 @@ def flow_process_transaction_master():
 
     users_new_df = user_df \
         .transform(lambda df:  txn_master.user_state_join(df, user_state_df))\
-        .transform(lambda df: Commons.select_user_state_df(df))
+        .transform(lambda df: Commons().select_user_state_df(df))
 
     user_card_df = users_new_df \
         .transform(lambda df: txn_master.user_product_join(df, p_card_account_df))\

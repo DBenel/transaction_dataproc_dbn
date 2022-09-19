@@ -1,6 +1,17 @@
 # transaction_dataproc_dbn
 Deploy pyspark jobs in Data Proc
 
+This project contains pyspark jobs. The first extract jobs consume from Cloud Storage and load data into BigQuery. The transformation jobs read and write to the same BigQuery dataset. While the star model jobs read and write to different BigQuery datasets.
+
+These pyspark jobs will be deployed and executed in Dataproc.
+
+This is the folder structure:
+
+`master/(extract, starModel, transform)`: modules with pyspark job.\
+`master/field`: class that contains dictionaries for each table. \
+`master/util`: module that contains the class of common methods and the class of constants. \
+`resource/data/input`: you will be able to find the 6 csv files that will be loaded and transformed. \
+`resource/schema`: contains 3 folders that separate the schemas needed to create the tables.
 
 Steps to deploy in GCP:
 
@@ -14,11 +25,12 @@ $ export BUCKET=${PROJECT_ID}_${TEST_PROJECT_ID}_b2
 ```
 $ export REGION=europe-west1
 $ gsutil mb -l ${REGION} gs://${BUCKET}
+$ gsutil mb -l ${REGION} gs://${BUCKET}_tmp
 ```
 
 2. Clone Repository:
 ```
-$ git clone https://github.com/dbenel/transaction_dataproc_dbn.git 
+$ git clone https://github.com/DBenel/transaction_dataproc_dbn.git 
 ```
 3. Set more Variables:
 ```
@@ -42,14 +54,20 @@ $ bq --location=${REGION} mk \
     ${DATA_SET_STAR}
 ```
 5. Create tables: \
-5.1. Move files to new file: \
+5.1. Zip modules
 ```
-$ gsutil cp -r transaction_dataproc_dbn/ gs://${BUCKET}/
+$ cd transaction_dataproc_dbn/
+$ zip -r master.zip master
+$ cd ..
+```
+5.2. Move files to new file: \
+```
+$ gsutil -m cp -r transaction_dataproc_dbn/ gs://${BUCKET}/
 $ mkdir ${TEST_PROJECT_ID}_schemas
 $ cp -r transaction_dataproc_dbn/resources/schema/ ${TEST_PROJECT_ID}_schemas
 $ cd ${TEST_PROJECT_ID}_schemas
 ```
-5.2. Create tables: \
+5.3. Create tables: \
     Extraction:
 ```
 $ cd schema/output/
@@ -95,17 +113,19 @@ $ gcloud dataproc clusters create ${CLUSTER} \
     --worker-boot-disk-size 500 \
     --image-version 2.0-debian10 \
     --project ${PROJECT_ID} \
-    --labels ${LABEL_KEY}=${LABEL_VALUE} 
+    --labels ${LABEL_KEY}=${LABEL_VALUE}
 ```
 
 7. Submit Jobs:
 
-Extraction Jobs:
+Extraction Jobs:\
+Both the extraction and transformation jobs have 3 parameters: BUCKET, PROJECT_ID and DATA_SET_MASTER
 ```
 # 3 Parameters
 $ gcloud dataproc jobs submit pyspark --cluster=${CLUSTER} \
     --region=${REGION} \
     --jars=gs://spark-lib/bigquery/spark-bigquery-latest_2.12.jar \
+    --py-files gs://${BUCKET}/transaction_dataproc_dbn/master.zip \
     gs://${BUCKET}/transaction_dataproc_dbn/master/extract/extract_bank_account.py \
     -- ${BUCKET} ${PROJECT_ID} ${DATA_SET_MASTER}
 ```
@@ -113,52 +133,85 @@ $ gcloud dataproc jobs submit pyspark --cluster=${CLUSTER} \
 $ gcloud dataproc jobs submit pyspark --cluster=${CLUSTER} \
     --region=${REGION} \
     --jars=gs://spark-lib/bigquery/spark-bigquery-latest_2.12.jar \
+    --py-files gs://${BUCKET}/transaction_dataproc_dbn/master.zip \
     gs://${BUCKET}/transaction_dataproc_dbn/master/extract/extract_card_account.py \
     -- ${BUCKET} ${PROJECT_ID} ${DATA_SET_MASTER}
 
 $ gcloud dataproc jobs submit pyspark --cluster=${CLUSTER} \
     --region=${REGION} \
     --jars=gs://spark-lib/bigquery/spark-bigquery-latest_2.12.jar \
+    --py-files gs://${BUCKET}/transaction_dataproc_dbn/master.zip \
     gs://${BUCKET}/transaction_dataproc_dbn/master/extract/extract_exchange_rate.py \
     -- ${BUCKET} ${PROJECT_ID} ${DATA_SET_MASTER}
 
 $ gcloud dataproc jobs submit pyspark --cluster=${CLUSTER} \
     --region=${REGION} \
     --jars=gs://spark-lib/bigquery/spark-bigquery-latest_2.12.jar \
+    --py-files gs://${BUCKET}/transaction_dataproc_dbn/master.zip \
     gs://${BUCKET}/transaction_dataproc_dbn/master/extract/extract_transaction.py \
     -- ${BUCKET} ${PROJECT_ID} ${DATA_SET_MASTER}
 
 $ gcloud dataproc jobs submit pyspark --cluster=${CLUSTER} \
     --region=${REGION} \
     --jars=gs://spark-lib/bigquery/spark-bigquery-latest_2.12.jar \
+    --py-files gs://${BUCKET}/transaction_dataproc_dbn/master.zip \
     gs://${BUCKET}/transaction_dataproc_dbn/master/extract/extract_user.py \
     -- ${BUCKET} ${PROJECT_ID} ${DATA_SET_MASTER}
 
 $ gcloud dataproc jobs submit pyspark --cluster=${CLUSTER} \
     --region=${REGION} \
     --jars=gs://spark-lib/bigquery/spark-bigquery-latest_2.12.jar \
+    --py-files gs://${BUCKET}/transaction_dataproc_dbn/master.zip \
     gs://${BUCKET}/transaction_dataproc_dbn/master/extract/extract_user_state.py \
     -- ${BUCKET} ${PROJECT_ID} ${DATA_SET_MASTER}
 ```
 
-Star Model Jobs
+Transform Jobs:
+```
+$ gcloud dataproc jobs submit pyspark --cluster=${CLUSTER} \
+    --region=${REGION} \
+    --jars=gs://spark-lib/bigquery/spark-bigquery-latest_2.12.jar \
+    --py-files gs://${BUCKET}/transaction_dataproc_dbn/master.zip \
+    gs://${BUCKET}/transaction_dataproc_dbn/master/transform/transaction_currency.py \
+    -- ${BUCKET} ${PROJECT_ID} ${DATA_SET_MASTER}
+    
+$ gcloud dataproc jobs submit pyspark --cluster=${CLUSTER} \
+    --region=${REGION} \
+    --jars=gs://spark-lib/bigquery/spark-bigquery-latest_2.12.jar \
+    --py-files gs://${BUCKET}/transaction_dataproc_dbn/master.zip \
+    gs://${BUCKET}/transaction_dataproc_dbn/master/transform/transaction_master.py \
+    -- ${BUCKET} ${PROJECT_ID} ${DATA_SET_MASTER}
+    
+$ gcloud dataproc jobs submit pyspark --cluster=${CLUSTER} \
+    --region=${REGION} \
+    --jars=gs://spark-lib/bigquery/spark-bigquery-latest_2.12.jar \
+    --py-files gs://${BUCKET}/transaction_dataproc_dbn/master.zip \
+    gs://${BUCKET}/transaction_dataproc_dbn/master/transform/multiple_summary.py \
+    -- ${BUCKET} ${PROJECT_ID} ${DATA_SET_MASTER}
+    
+```
+
+Star Model Jobs:
 ```
 # 4 Parameters
 $ gcloud dataproc jobs submit pyspark --cluster=${CLUSTER} \
     --region=${REGION} \
     --jars=gs://spark-lib/bigquery/spark-bigquery-latest_2.12.jar \
+    --py-files gs://${BUCKET}/transaction_dataproc_dbn/master.zip \
     gs://${BUCKET}/transaction_dataproc_dbn/master/starModel/dim_product_job.py \
     -- ${BUCKET} ${PROJECT_ID} ${DATA_SET_MASTER} ${DATA_SET_STAR}
 
 $ gcloud dataproc jobs submit pyspark --cluster=${CLUSTER} \
     --region=${REGION} \
     --jars=gs://spark-lib/bigquery/spark-bigquery-latest_2.12.jar \
+    --py-files gs://${BUCKET}/transaction_dataproc_dbn/master.zip \
     gs://${BUCKET}/transaction_dataproc_dbn/master/starModel/dim_user_job.py \
     -- ${BUCKET} ${PROJECT_ID} ${DATA_SET_MASTER} ${DATA_SET_STAR}
 
 $ gcloud dataproc jobs submit pyspark --cluster=${CLUSTER} \
     --region=${REGION} \
     --jars=gs://spark-lib/bigquery/spark-bigquery-latest_2.12.jar \
+    --py-files gs://${BUCKET}/transaction_dataproc_dbn/master.zip \
     gs://${BUCKET}/transaction_dataproc_dbn/master/starModel/fact_transaction.py \
     -- ${BUCKET} ${PROJECT_ID} ${DATA_SET_MASTER} ${DATA_SET_STAR}
 ```
